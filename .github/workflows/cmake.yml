@@ -52,6 +52,13 @@ jobs:
         with:
           name: mywc
           path: ${{github.workspace}}/build/src/mywc
+      
+
+
+      - id: version
+        run: echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+
+      - run: echo version = ${{ steps.version.outputs.version }}
 
     # - name: Test
     #   working-directory: ${{github.workspace}}/build
@@ -65,9 +72,37 @@ jobs:
     needs: build
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: Download built artifact
         uses: actions/download-artifact@v3
         with:
           name: mywc
 
       - run: ls -laF
+
+      - id: version
+        run: echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          release_name: Release ${{ steps.version.outputs.version }}
+          body_path: changelog.md
+          draft: true
+          prerelease: false
+
+
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./mywc
+          asset_name: mywc
+          asset_content_type: application/x-executable
