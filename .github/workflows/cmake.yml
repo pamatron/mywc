@@ -46,14 +46,11 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-      - run: find . -name "mywc"
-      - run: find ${{github.workspace}} -name "mywc"
-
       - name: Upload built executable
         uses: actions/upload-artifact@v3
         with:
           name: mywc
-          path: ${{github.workspace}}/build/mywc
+          path: ${{github.workspace}}/build/src/mywc
 
     # - name: Test
     #   working-directory: ${{github.workspace}}/build
