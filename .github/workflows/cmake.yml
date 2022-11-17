@@ -1,9 +1,10 @@
 name: CMake
 run-name: ${{ github.actor }} is building with Github Actions 🚀
 on:
-  push:
-    branches:
-      - main
+  - push
+  # push:
+  #   branches:
+  #     - main
   # pull_request:
   #   branches:
   #     - main
@@ -68,5 +69,5 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: mywc
-          
+
       - run: ls -laF
