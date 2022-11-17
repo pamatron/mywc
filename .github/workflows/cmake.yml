@@ -1,5 +1,5 @@
 name: CMake
-run-name: ${{ github.actor }} is building with Github Actions 🚀
+# run-name: ${{ github.actor }} is building with Github Actions 🚀
 on:
   - push
   # push:
