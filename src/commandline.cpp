@@ -1,7 +1,8 @@
-#include <getopt.h>
-
 #include "commandline.h"
+
 #include "version.h"
+
+#include <getopt.h>
 
 namespace MYWC
 {
