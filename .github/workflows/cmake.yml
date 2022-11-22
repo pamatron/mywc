@@ -1,5 +1,5 @@
 name: CMake
-run-name: ${{ github.actor }} is building with Github Actions 🚀
+# run-name: ${{ github.actor }} is building with Github Actions 🚀
 on:
   - push
   # push:
@@ -56,7 +56,7 @@ jobs:
 
 
       - id: version
-        run: echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+        run: echo "version=v$(${{github.workspace}}/build/src/mywc --version)" >> $GITHUB_OUTPUT
 
       - run: echo version = ${{ steps.version.outputs.version }}
 
