@@ -52,6 +52,7 @@ jobs:
         with:
           name: mywc
           path: ${{github.workspace}}/build/src/mywc
+          retention-days: 7
       
 
 
