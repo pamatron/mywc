@@ -82,7 +82,7 @@ jobs:
       - run: ls -laF
 
       - id: version
-        run: echo "version=v$(${{github.workspace}}/build/src/mywc --version)" >> $GITHUB_OUTPUT
+        run: echo "version=v$(${{github.workspace}}/mywc --version)" >> $GITHUB_OUTPUT
 
       - name: Create Release
         id: create_release
