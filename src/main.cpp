@@ -36,8 +36,10 @@ namespace MYWC
                 inword = true;
             }
         }
+        words += inword;
 
-        fmt::print("bytes, words, lines\n{:5}{:5}{:5}\n",
+        fmt::print("bytes, words, lines\n");
+        fmt::print("{:7} {:7} {:7}\n",//wrong order
                    bytes, words, lines);
     }
 }
