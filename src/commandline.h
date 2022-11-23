@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iostream>
+#include <string>
 
 namespace MYWC
 {
@@ -13,6 +13,8 @@ namespace MYWC
         char const *file_name;
 
         explicit CLI(int argc, char **argv);
+#ifndef NDEBUG
+        explicit operator std::string();
+#endif
     };
-    std::ostream &operator<<(std::ostream &out, CLI const &data);
 }
