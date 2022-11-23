@@ -53,11 +53,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: mywc
-          path: ${{github.workspace}}/build/mywc
+          path: ${{github.workspace}}/build/src/mywc
           retention-days: 7
 
       - id: version
-        run: echo "version=v$(${{github.workspace}}/build/mywc --version)" >> $GITHUB_OUTPUT
+        run: echo "version=v$(${{github.workspace}}/build/src/mywc --version)" >> $GITHUB_OUTPUT
 
       - run: echo version = ${{ steps.version.outputs.version }}
 
