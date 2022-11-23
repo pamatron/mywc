@@ -3,19 +3,42 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
-#include <getopt.h>
 #include <iostream>
 #include <fstream>
+
+#include <getopt.h>
+#include <ctype.h>
 
 namespace MYWC
 {
     void process_input(std::istream &in)
     {
+        uint64_t bytes = 0;
+        uint64_t words = 0;
+        uint64_t lines = 0;
         std::string line;
-        while (std::getline(in, line))
+        char c;
+        bool inword = false;
+        while (in.read(&c, 1))
         {
-            fmt::print("line: {}\n", line);
+            bytes++;
+            if (c == '\n')
+            {
+                lines++;
+            }
+            if (isspace(c))
+            {
+                words += inword;
+                inword = false;
+            }
+            else
+            {
+                inword = true;
+            }
         }
+
+        fmt::print("bytes, words, lines\n{:5}{:5}{:5}\n",
+                   bytes, words, lines);
     }
 }
 

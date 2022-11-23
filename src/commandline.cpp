@@ -47,7 +47,7 @@ always in the following order: newline, word, byte.\n\
     {
         int optc;
 
-        print_chars = false;
+        print_bytes = false;
         print_lines = false;
         print_words = false;
 
@@ -62,7 +62,7 @@ always in the following order: newline, word, byte.\n\
             switch (optc)
             {
             case 'c':
-                print_chars = true;
+                print_bytes = true;
                 break;
 
             case 'l':
@@ -86,6 +86,11 @@ always in the following order: newline, word, byte.\n\
             }
         }
 
+        if (!print_bytes && !print_words && !print_lines)
+        {
+            print_bytes = print_words = print_lines = true;
+        }
+
         if (optind < argc)
         {
             file_name = argv[optind];
@@ -101,11 +106,11 @@ always in the following order: newline, word, byte.\n\
     CLI::operator std::string()
     {
         return fmt::format("\
-print_chars: {}\n\
+print_bytes: {}\n\
 print_lines: {}\n\
 print_words: {}\n\
 file_name:   \"{}\"",
-                           print_chars, print_lines, print_words, file_name);
+                           print_bytes, print_lines, print_words, file_name);
     }
 #endif
 }
