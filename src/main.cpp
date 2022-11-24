@@ -5,13 +5,14 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include <getopt.h>
 #include <ctype.h>
 
 namespace MYWC
 {
-    void process_input(std::istream &in)
+    void process_input(std::istream &in, const CLI &cli_args)
     {
         uint64_t bytes = 0;
         uint64_t words = 0;
@@ -38,9 +39,21 @@ namespace MYWC
         }
         words += inword;
 
-        fmt::print("bytes, words, lines\n");
-        fmt::print("{:7} {:7} {:7}\n",//wrong order
-                   bytes, words, lines);
+        std::vector<uint64_t> output_counts;
+
+        if (cli_args.print_lines)
+        {
+            output_counts.push_back(lines);
+        }
+        if (cli_args.print_words)
+        {
+            output_counts.push_back(words);
+        }
+        if (cli_args.print_bytes)
+        {
+            output_counts.push_back(bytes);
+        }
+        fmt::print("{:7}\n", fmt::join(output_counts, " "));
     }
 }
 
@@ -52,14 +65,14 @@ int main(int argc, char **argv)
 #endif
     if (std::string("-") == cli_args.file_name)
     {
-        MYWC::process_input(std::cin);
+        MYWC::process_input(std::cin, cli_args);
     }
     else
     {
         std::ifstream input_file(cli_args.file_name);
         if (input_file)
         {
-            MYWC::process_input(input_file);
+            MYWC::process_input(input_file, cli_args);
         }
         else
         {
