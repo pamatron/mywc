@@ -1,5 +1,13 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.9)
 project(mywc VERSION 0.1.0)
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT result)
+if(result)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+else()
+    message("IPO not supported")
+endif()
 
 # include(CTest)
 # enable_testing()
