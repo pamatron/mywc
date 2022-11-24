@@ -101,16 +101,4 @@ always in the following order: newline, word, byte.\n\
             file_name = "-";
         }
     }
-
-#ifndef NDEBUG
-    CLI::operator std::string()
-    {
-        return fmt::format("\
-print_bytes: {}\n\
-print_lines: {}\n\
-print_words: {}\n\
-file_name:   \"{}\"",
-                           print_bytes, print_lines, print_words, file_name);
-    }
-#endif
 }

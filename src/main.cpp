@@ -3,12 +3,12 @@
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
-#include <getopt.h>
 #include <ctype.h>
+#include <getopt.h>
 
 namespace MYWC
 {
@@ -60,9 +60,6 @@ namespace MYWC
 int main(int argc, char **argv)
 {
     MYWC::CLI cli_args(argc, argv);
-#ifndef NDEBUG
-    fmt::print("CLI args:\n{}\n", std::string(cli_args));
-#endif
     if (std::string("-") == cli_args.file_name)
     {
         MYWC::process_input(std::cin, cli_args);

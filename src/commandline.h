@@ -1,7 +1,5 @@
 #pragma once
 
-#include <string>
-
 namespace MYWC
 {
     class CLI
@@ -13,8 +11,5 @@ namespace MYWC
         char const *file_name;
 
         explicit CLI(int argc, char **argv);
-#ifndef NDEBUG
-        explicit operator std::string();
-#endif
     };
 }
