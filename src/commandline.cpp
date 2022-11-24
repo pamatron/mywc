@@ -1,7 +1,10 @@
-#include <getopt.h>
-
 #include "commandline.h"
+
 #include "version.h"
+
+#include <fmt/core.h>
+
+#include <getopt.h>
 
 namespace MYWC
 {
@@ -16,7 +19,7 @@ namespace MYWC
 
     void print_usage(int status)
     {
-        std::cout << "\
+        fmt::print("\
 Usage: mywc [OPTION]... [FILE]\n\
 Print newline, word, and byte counts for FILE. \
 A word is a non-zero-length sequence of printable \
@@ -30,14 +33,13 @@ always in the following order: newline, word, byte.\n\
   -l, --lines            print the newline counts\n\
   -w, --words            print the word counts\n\
       --help        display this help and exit\n\
-      --version     output version information and exit\n";
+      --version     output version information and exit\n");
         exit(status);
     }
 
     void print_version()
     {
-
-        std::cout << VERSION << std::endl;
+        fmt::print("{}", VERSION);
         exit(EXIT_SUCCESS);
     }
 
@@ -45,7 +47,7 @@ always in the following order: newline, word, byte.\n\
     {
         int optc;
 
-        print_chars = false;
+        print_bytes = false;
         print_lines = false;
         print_words = false;
 
@@ -60,7 +62,7 @@ always in the following order: newline, word, byte.\n\
             switch (optc)
             {
             case 'c':
-                print_chars = true;
+                print_bytes = true;
                 break;
 
             case 'l':
@@ -84,6 +86,11 @@ always in the following order: newline, word, byte.\n\
             }
         }
 
+        if (!print_bytes && !print_words && !print_lines)
+        {
+            print_bytes = print_words = print_lines = true;
+        }
+
         if (optind < argc)
         {
             file_name = argv[optind];
@@ -94,16 +101,4 @@ always in the following order: newline, word, byte.\n\
             file_name = "-";
         }
     }
-
-#ifndef NDEBUG
-    std::ostream &operator<<(std::ostream &out, CLI const &data)
-    {
-        out << "print_chars " << data.print_chars << std::endl;
-        out << "print_lines " << data.print_lines << std::endl;
-        out << "print_words " << data.print_words << std::endl;
-        out << "file_name " << data.file_name << std::endl;
-        // and so on...
-        return out;
-    }
-#endif
 }

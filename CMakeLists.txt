@@ -4,6 +4,9 @@ project(mywc VERSION 0.1.0)
 # include(CTest)
 # enable_testing()
 
+include_directories(extern/fmt/include)
+add_subdirectory(extern/fmt)
+
 include_directories(include)
 add_subdirectory(src)
 
