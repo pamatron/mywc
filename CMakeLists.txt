@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.12) # for -j N arg
 project(mywc VERSION 0.1.0)
 
 include(CheckIPOSupported)
