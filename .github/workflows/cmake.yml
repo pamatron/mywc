@@ -90,8 +90,8 @@ jobs:
         run: |
           if git show-ref --tags "${{ needs.build.outputs.version }}"
           then
-            echo tag "{{ needs.build.outputs.version }}" already exists
-            exit(1)
+            echo ::error file=src/version.h::tag "{{ needs.build.outputs.version }}" already exists
+            exit 1
           fi
 
       - name: Download built artifact
