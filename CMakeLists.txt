@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.12) # for -j N arg
 project(mywc VERSION 0.1.0)
 
 include(CheckIPOSupported)
@@ -9,14 +9,16 @@ else()
     message("IPO not supported")
 endif()
 
-# include(CTest)
-# enable_testing()
+include(CTest)
+enable_testing()
 
 include_directories(extern/fmt/include)
 add_subdirectory(extern/fmt)
 
 include_directories(include)
 add_subdirectory(src)
+
+add_subdirectory(test)
 
 # set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 # set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
