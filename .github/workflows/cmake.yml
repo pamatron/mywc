@@ -86,12 +86,17 @@ jobs:
         with:
           submodules: recursive
 
+      - run: git show-ref --tags
+
       - name: check tag already exists
         run: |
           if git show-ref --tags "${{ needs.build.outputs.version }}"
           then
-            echo ::error file=src/version.h::tag "{{ needs.build.outputs.version }}" already exists
+            echo tag "${{ needs.build.outputs.version }}" already exists
+            echo ::error file=src/version.h::tag "${{ needs.build.outputs.version }}" already exists
             exit 1
+          else
+            echo tag "${{ needs.build.outputs.version }}" is free
           fi
 
       - name: Download built artifact
