@@ -86,6 +86,8 @@ jobs:
         with:
           submodules: recursive
 
+      - run: git fetch --depth 1 origin tag "*"
+
       - run: git show-ref --tags
 
       - name: check tag already exists
