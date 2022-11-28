@@ -50,7 +50,7 @@ jobs:
 
       - name: Build
         # Build your program with the given configuration
-        run: cmake --build ${{github.workspace}}/build 
+        run: cmake --build ${{github.workspace}}/build
           --config ${{env.BUILD_TYPE}}
           -j 3
 
@@ -73,6 +73,9 @@ jobs:
         run: ctest -C ${{env.BUILD_TYPE}} -j 3
           --output-on-failure
 
+    outputs:
+      version: ${{steps.version.outputs.version}}
+
   release:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -83,6 +86,14 @@ jobs:
         with:
           submodules: recursive
 
+      - name: check tag already exists
+        run: |
+          if git show-ref --tags "${{ needs.build.outputs.version }}"
+          then
+            echo tag "{{ needs.build.outputs.version }}" already exists
+            exit(1)
+          fi
+
       - name: Download built artifact
         uses: actions/download-artifact@v3
         with:
@@ -92,17 +103,14 @@ jobs:
 
       - run: chmod u+x ${{github.workspace}}/mywc
 
-      - id: version
-        run: echo "version=v$(${{github.workspace}}/mywc --version)" >> $GITHUB_OUTPUT
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.version.outputs.version }}
-          release_name: Release ${{ steps.version.outputs.version }}
+          tag_name: ${{ needs.build.outputs.version }}
+          release_name: Release ${{ needs.build.outputs.version }}
           body_path: changelog.md
           draft: true
           prerelease: false
