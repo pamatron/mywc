@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3
+
+use correct file extension for headers (.hpp)
+
 ## 1.0.2
 
 add tests

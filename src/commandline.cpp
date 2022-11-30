@@ -1,6 +1,6 @@
-#include "commandline.h"
+#include "commandline.hpp"
 
-#include "version.h"
+#include "version.hpp"
 
 #include <fmt/core.h>
 
